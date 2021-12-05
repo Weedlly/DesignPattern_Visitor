@@ -87,13 +87,24 @@ void CSVExportVisitor::visitCity(City* city) {   // new code by D ver6
 	fout.close();
 }
 
-void CSVExportVisitor::visitCommercial(Commercial* commercial) {
+void CSVExportVisitor::visitCommercial(Commercial* commercial) { // new code by An 
+	string nameF = "Commercial_" + commercial->getName() + ".csv";
+	ofstream fout(nameF);
 
+	export_MapCSV(commercial, fout);
+	fout << endl << endl;
+	fout << "Status: " << commercial->getStatus();
+	fout.close();
 }
 
+void CSVExportVisitor::visitConstruction(Construction* construction) { // new code by An 
+	string nameF = "Construction_" + construction->getName() + ".csv";
+	ofstream fout(nameF);
 
-void CSVExportVisitor::visitConstruction(Construction* construction) {
-
+	export_MapCSV(construction, fout);
+	fout << endl << endl;
+	fout << "Staff: " << construction->getEmployee();
+	fout.close();
 }
 
 void CSVExportVisitor::visitFactory(Factory* factory) {    // new code by D ver6

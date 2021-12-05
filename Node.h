@@ -150,6 +150,10 @@ public:
 	float square() {//new add
 		return size_.length * size_.width;
 	}
+	bool getStatus()
+	{
+		return status;
+	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << status << endl;
 	}
