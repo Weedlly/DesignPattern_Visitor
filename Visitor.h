@@ -38,74 +38,77 @@ public:
 	// Export the City's ID and center coordinates and name.
 	void visitCity(City* city);
 
-	//void countPopulation(City* city);         // Warning
+	//void countPopulation(City* city);						// Warning
 	//void citySquare(City* city);
-	
+
 	//Export the industry's ID, center coordinates and name.
 	void visitIndustry(Industry* industry);
 
-	//void countEmployee(Industry* industry);  // Warning
+	//void countEmployee(Industry* industry);				 // Warning
 	//void industrySquare(Industry* industry);
-	// 
+	//
 	// Export the Factory's ID, center coordinates and name.
 	void visitFactory(Factory* factory);
 	// Export the Commercial's ID, center coordinates and name.
 	void visitCommercial(Commercial* commercial);
 
-	//void commercialSquare(Commercial* commercial);   Warning
-
+	//void commercialSquare(Commercial* commercial);			// Warning
 
 	// Export the Construction's ID, center coordinates and name.
 	void visitConstruction(Construction* construction);
-	//void countEmployee(Construction* construction);   // Warning
+	//void countEmployee(Construction* construction);					 // Warning
 	//void constructionSquare(Construction* construction);
 
 	// Export the Residential's ID, center coordinates and name.
 	void visitResidential(Residential* residential);
 };
+
 class CSVExportVisitor : public Visitor  // new code by D ver6
 {
 public:
 	// Export the City's ID and center coordinates and name.
 	void visitCity(City* city);
-	
+
 	//Export the industry's ID, center coordinates and name.
 	void visitIndustry(Industry* industry);
-	
+
 	// Export the Factory's ID, center coordinates and name.
 	void visitFactory(Factory* factory);
 	// Export the Commercial's ID, center coordinates and name.
 	void visitCommercial(Commercial* commercial);
-	
+
 	// Export the Construction's ID, center coordinates and name.
 	void visitConstruction(Construction* construction);
-	
+
 	// Export the Residential's ID, center coordinates and name.
 	void visitResidential(Residential* residential);
 };
 
-
 class TXTExportVisitor : public Visitor
 {
 public:
-	void Print_MapTXT(vector<vector<int>> Map_Txt);
+	//Export the industry's location , center coordinates and filename.
+	void visitCity(City* city);
+	void visitIndustry(Industry* industry);
+	void visitFactory(Factory* factory);
+	void visitCommercial(Commercial* commercial);
+	void visitConstruction(Construction* construction);
+	void visitResidential(Residential* residential);
 };
 
+///      CLASS INTERFACE
 class Application
 {
 private:
 	vector<Node*> set_of_shape;
 	vector<vector<int>> Map_Txt;
 
-	
 public:
 	Application(string readFileName);
 	vector<Node*> getNodeArr();
 	void export_XML();
-	void printMapTXT();
-
+	void export_TXT(); // new code by Hoang ver7
 	void export_CSV(); // new code by D ver6
 };
 
 #endif // !Visitor_h
-

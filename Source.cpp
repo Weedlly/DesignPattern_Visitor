@@ -5,9 +5,7 @@ int main() {
 	Application Client("DPdata.txt");
 	Client.export_XML();
 	cout << "======================" << endl;
-	Client.printMapTXT();
-
-
+	Client.export_TXT();
 	Client.export_CSV();
 	return 0;
 }

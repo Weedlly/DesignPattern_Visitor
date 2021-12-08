@@ -8,10 +8,10 @@ void XMLExportVisitor::visitCity(City* city) {
 	cout << "Export coordinates of City" << endl;
 }
 //void XMLExportVisitor::countPopulation(City* city) {
-//	cout << "City's population:" << city->getPopulation();
+//	cout << "City's population:" << city->getPopulation();   // Error
 //}
 //
-//void XMLExportVisitor::citySquare(City* city) { //fixed
+//void XMLExportVisitor::citySquare(City* city) {
 //	cout << "City's square:" << city->getPopulation();
 //}
 //Export the industry's ID, center coordinates and name.
@@ -21,7 +21,7 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 	cout << "Export coordinates of Industry" << endl;
 }
 //void XMLExportVisitor::countEmployee(Industry* industry) {
-//	cout << "Industry's Employee:" << industry->getEmployee();
+//	cout << "Industry's Employee:" << industry->getEmployee();			// Error
 //}
 //void XMLExportVisitor::industrySquare(Industry* industry) {
 //	cout << "Industry's square" << industry->square();
@@ -41,7 +41,7 @@ void XMLExportVisitor::visitConstruction(Construction* construction) {
 	cout << "Export coordinates of Construction" << endl;
 }
 //void XMLExportVisitor::countEmployee(Construction* construction) {
-//	cout << "Construction's Employee:" << construction->getEmployee();
+//	cout << "Construction's Employee:" << construction->getEmployee();			// Error
 //}
 //void XMLExportVisitor::constructionSquare(Construction* construction) {
 //	cout << "Construction's square" << construction->square();
@@ -53,7 +53,7 @@ void XMLExportVisitor::visitCommercial(Commercial* commercial) {
 	cout << location.x_ << "/" << location.y_ << "/" << commercial->getName() << endl;
 	cout << "Export coordinates of Commercial" << endl;
 }
-//void XMLExportVisitor::commercialSquare(Commercial* commercial) {
+//void XMLExportVisitor::commercialSquare(Commercial* commercial) {			// Error
 //	cout << "Commercial's square:" << commercial->square();
 //} //new add
 // Export the Residential's ID, center coordinates and name.
@@ -87,7 +87,7 @@ void CSVExportVisitor::visitCity(City* city) {   // new code by D ver6
 	fout.close();
 }
 
-void CSVExportVisitor::visitCommercial(Commercial* commercial) { // new code by An 
+void CSVExportVisitor::visitCommercial(Commercial* commercial) { // new code by An
 	string nameF = "Commercial_" + commercial->getName() + ".csv";
 	ofstream fout(nameF);
 
@@ -97,7 +97,7 @@ void CSVExportVisitor::visitCommercial(Commercial* commercial) { // new code by 
 	fout.close();
 }
 
-void CSVExportVisitor::visitConstruction(Construction* construction) { // new code by An 
+void CSVExportVisitor::visitConstruction(Construction* construction) { // new code by An
 	string nameF = "Construction_" + construction->getName() + ".csv";
 	ofstream fout(nameF);
 
@@ -140,26 +140,94 @@ void CSVExportVisitor::visitResidential(Residential* residential) {  // new code
 	for (int i = 0; i < residential->getNOA().size(); i++) {
 		fout << residential->getNOA()[i] << ",";
 	}
-	
+
 	fout.close();
 }
 
+// TXT export
 
-
-
-// TXTExport
-void TXTExportVisitor::Print_MapTXT(vector<vector<int>> Map_Txt) {
+void export_MapTXT(Node* node, ofstream& fout) {  // new code by Hoang ver7
 	for (int i = 0; i < Map_Size; i++)
 	{
 		for (int j = 0; j < Map_Size; j++)
 		{
-			cout << Map_Txt[i][j] << "   ";
+			if ((i >= node->getLocation().x_ && i < node->getLocation().x_ + node->getSize().length) && (j >= node->getLocation().y_ && j < node->getLocation().y_ + node->getSize().width)) {
+				fout << 1 << " ";
+			}
+			else fout << 0 << " ";
 		}
-		cout << endl;
+		fout << endl;
 	}
 }
 
-/// Application
+void TXTExportVisitor::visitCity(City* city) {   // new code by Hoang ver7
+	string nameF = "City_" + city->getName() + ".txt";
+	ofstream fout(nameF);
+
+	export_MapTXT(city, fout);
+	fout << endl << endl;
+	fout << "Population: " << city->getPopulation();
+	fout.close();
+}
+
+void TXTExportVisitor::visitCommercial(Commercial* commercial) { // new code by Hoang ver 7
+	string nameF = "Commercial_" + commercial->getName() + ".txt";
+	ofstream fout(nameF);
+
+	export_MapTXT(commercial, fout);
+	fout << endl << endl;
+	fout << "Status: " << commercial->getStatus();
+	fout.close();
+}
+
+void TXTExportVisitor::visitConstruction(Construction* construction) { // new code by Hoang ver7
+	string nameF = "Construction_" + construction->getName() + ".txt";
+	ofstream fout(nameF);
+
+	export_MapTXT(construction, fout);
+	fout << endl << endl;
+	fout << "Staff: " << construction->getEmployee();
+	fout.close();
+}
+
+void TXTExportVisitor::visitFactory(Factory* factory) {    // new code by Hoang ver7
+	string nameF = "Factory_" + factory->getName() + ".txt";
+	ofstream fout(nameF);
+
+	export_MapTXT(factory, fout);
+	fout << endl << endl;
+	fout << "Status: " << factory->getStatus() << endl;
+	fout << "Mode of operation: " << factory->getMode();
+	fout.close();
+}
+
+void TXTExportVisitor::visitIndustry(Industry* industry) {    // new code by Hoang ver7
+	string nameF = "Industry_" + industry->getName() + ".txt";
+	ofstream fout(nameF);
+
+	export_MapTXT(industry, fout);
+	fout << endl << endl;
+	fout << "Form: " << industry->getForm() << endl;
+	fout << "Staff: " << industry->getEmployee();
+	fout.close();
+}
+
+void TXTExportVisitor::visitResidential(Residential* residential) {  // new code by Hoang ver7
+	string nameF = "Residential_" + residential->getName() + ".txt";
+	ofstream fout(nameF);
+
+	export_MapTXT(residential, fout);
+	fout << endl << endl;
+	fout << "Population: " << residential->getPop() << endl;
+	fout << "Apartment Names: ";
+	for (int i = 0; i < residential->getNOA().size(); i++) {
+		fout << residential->getNOA()[i] << ",";
+	}
+
+	fout.close();
+}
+
+/// Application : Interface
 Application::Application(string readFileName) {
 	Map_Txt.resize(Map_Size);
 	for (int i = 0; i < Map_Size; i++)
@@ -169,6 +237,7 @@ Application::Application(string readFileName) {
 
 	set_of_shape = readfile(readFileName, Map_Txt);
 }
+
 vector<Node*> Application::getNodeArr() {
 	return set_of_shape;
 }
@@ -180,20 +249,9 @@ void Application::export_XML() {
 	}
 	delete customer;
 }
-void Application::printMapTXT() {
-	for (int i = 0; i < Map_Size; i++)
-	{
-		for (int j = 0; j < Map_Size; j++)
-		{
-			cout << Map_Txt[i][j] << "   ";
-		}
-		cout << endl;
-	}
-}
 
-void Application::export_CSV() {
-	
-	CSVExportVisitor* customer = new CSVExportVisitor;
+void Application::export_TXT() {
+	TXTExportVisitor* customer = new TXTExportVisitor; // new code by Hoang ver7
 	for (int i = 0; i < set_of_shape.size(); i++)
 	{
 		set_of_shape[i]->accept(customer);
@@ -201,8 +259,11 @@ void Application::export_CSV() {
 	delete customer;
 }
 
-//void Application::printMapTXT() {
-//	TXTExportVisitor* customer = new TXTExportVisitor;
-//
-//}
-
+void Application::export_CSV() {
+	CSVExportVisitor* customer = new CSVExportVisitor;
+	for (int i = 0; i < set_of_shape.size(); i++)
+	{
+		set_of_shape[i]->accept(customer);
+	}
+	delete customer;
+}
