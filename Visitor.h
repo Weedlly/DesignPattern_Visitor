@@ -6,6 +6,8 @@
 #include <string>
 #include <fstream>
 #include "Node.h"
+#include "tinyxml.h"
+
 using namespace std;
 
 #define Map_Size  20

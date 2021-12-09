@@ -2,11 +2,7 @@
 #include "Visitor.h"
 
 // Export the City's ID and center coordinates and name.
-void XMLExportVisitor::visitCity(City* city) {
-	Location location = city->getLocation();
-	cout << location.x_ << "/" << location.y_ << "/" << city->getName() << "/" << endl;
-	cout << "Export coordinates of City" << endl;
-}
+// XML export
 //void XMLExportVisitor::countPopulation(City* city) {
 //	cout << "City's population:" << city->getPopulation();   // Error
 //}
@@ -15,52 +11,101 @@ void XMLExportVisitor::visitCity(City* city) {
 //	cout << "City's square:" << city->getPopulation();
 //}
 //Export the industry's ID, center coordinates and name.
-void XMLExportVisitor::visitIndustry(Industry* industry) {
-	Location location = industry->getLocation();
-	cout << location.x_ << "/" << location.y_ << "/" << industry->getName() << endl;
-	cout << "Export coordinates of Industry" << endl;
-}
 //void XMLExportVisitor::countEmployee(Industry* industry) {
 //	cout << "Industry's Employee:" << industry->getEmployee();			// Error
 //}
 //void XMLExportVisitor::industrySquare(Industry* industry) {
 //	cout << "Industry's square" << industry->square();
 //}
-
-// Export the Factory's ID, center coordinates and name.
-void XMLExportVisitor::visitFactory(Factory* factory) {
-	Location location = factory->getLocation();
-	cout << location.x_ << "/" << location.y_ << "/" << factory->getName() << endl;
-	cout << "Export coordinates of Factory" << endl;
-}
-
-// Export the Construction's ID, center coordinates and name.
-void XMLExportVisitor::visitConstruction(Construction* construction) {
-	Location location = construction->getLocation();
-	cout << location.x_ << "/" << location.y_ << "/" << construction->getName() << endl;
-	cout << "Export coordinates of Construction" << endl;
-}
 //void XMLExportVisitor::countEmployee(Construction* construction) {
 //	cout << "Construction's Employee:" << construction->getEmployee();			// Error
 //}
 //void XMLExportVisitor::constructionSquare(Construction* construction) {
 //	cout << "Construction's square" << construction->square();
 //}
-
-// Export the Commercial's ID, center coordinates and name.
-void XMLExportVisitor::visitCommercial(Commercial* commercial) {
-	Location location = commercial->getLocation();
-	cout << location.x_ << "/" << location.y_ << "/" << commercial->getName() << endl;
-	cout << "Export coordinates of Commercial" << endl;
-}
 //void XMLExportVisitor::commercialSquare(Commercial* commercial) {			// Error
 //	cout << "Commercial's square:" << commercial->square();
 //} //new add
 // Export the Residential's ID, center coordinates and name.
-void XMLExportVisitor::visitResidential(Residential* residential) {               // new code by D
-	Location location = residential->getLocation();
-	cout << location.x_ << "/" << location.y_ << "/" << residential->getName() << endl;
-	cout << "Export coordinates of Residential" << endl;
+
+void export_TypeXML(TiXmlDocument& doc, Node* node, string _typeName) {				// Hoang ver7
+	TiXmlDeclaration* dec = new TiXmlDeclaration("1.0", "utf-8", "");
+	doc.LinkEndChild(dec);
+
+	TiXmlElement* root = new TiXmlElement(&_typeName[0]);
+	root->SetAttribute("id", 1);
+	doc.LinkEndChild(root);
+
+	TiXmlElement* location = new TiXmlElement("Location");
+
+	// set up location x
+	string xVal = to_string(node->getLocation().x_);
+	TiXmlElement* locationX = new TiXmlElement("X");
+	TiXmlText* locationXContent = new TiXmlText(&xVal[0]);
+	location->LinkEndChild(locationX);
+	locationX->LinkEndChild(locationXContent);
+
+	// set up location y
+	string yVal = to_string(node->getLocation().y_);
+	TiXmlElement* locationY = new TiXmlElement("Y");
+	TiXmlText* locationYContent = new TiXmlText(&yVal[0]);
+	location->LinkEndChild(locationY);
+	locationY->LinkEndChild(locationYContent);
+
+	// set up Name
+	string nameVal = node->getName();
+	TiXmlElement* name = new TiXmlElement("Name");
+	TiXmlText* nameContent = new TiXmlText(&nameVal[0]);
+	root->LinkEndChild(name);
+	name->LinkEndChild(nameContent);												// Hoang ver7
+
+	root->LinkEndChild(location);
+}
+
+void XMLExportVisitor::visitCity(City* city) {
+	string fileName = "City_" + city->getName() + ".xml";
+	TiXmlDocument doc;
+	export_TypeXML(doc, city, "City");
+
+	TiXmlElement* root = doc.FirstChildElement();									// Hoang ver7
+
+	string populationVal = to_string(city->getPopulation());
+	TiXmlElement* population = new TiXmlElement("Population");
+	TiXmlText* populationContent = new TiXmlText(&populationVal[0]);
+	root->LinkEndChild(population);
+	population->LinkEndChild(populationContent);
+
+	doc.SaveFile(&fileName[0]);
+}
+void XMLExportVisitor::visitIndustry(Industry* industry) {
+	string fileName = "Industry_" + industry->getName() + ".xml";
+	TiXmlDocument doc;
+	export_TypeXML(doc, industry, "Industry");
+	// Hoang ver7
+	TiXmlElement* root = doc.FirstChildElement();
+
+	string EmployeeVal = to_string(industry->getEmployee());
+	TiXmlElement* Employee = new TiXmlElement("Employee");
+	TiXmlText* EmployeeContent = new TiXmlText(&EmployeeVal[0]);
+	root->LinkEndChild(Employee);
+	Employee->LinkEndChild(EmployeeContent);
+
+	doc.SaveFile(&fileName[0]);
+}
+
+void XMLExportVisitor::visitFactory(Factory* factory) {
+	// .........
+}
+
+void XMLExportVisitor::visitConstruction(Construction* construction) {
+	// .........
+}
+
+void XMLExportVisitor::visitCommercial(Commercial* commercial) {
+	// .........
+}
+void XMLExportVisitor::visitResidential(Residential* residential) {
+	// .........
 }
 
 void export_MapCSV(Node* node, ofstream& fout) {  // new code by D ver6
