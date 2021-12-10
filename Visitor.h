@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define Map_Size  20
+#define Map_Size  100
 
 struct Location;
 class Node;
@@ -23,8 +23,7 @@ class Residential;
 class ReadDataFile;
 class XMLExportVisitor;
 
-class Visitor
-{
+class Visitor {
 public:
 	virtual void visitCity(City*) = 0;
 	virtual void visitIndustry(Industry*) = 0;
@@ -34,8 +33,7 @@ public:
 	virtual void visitResidential(Residential*) = 0;
 };
 
-class XMLExportVisitor : public Visitor
-{
+class XMLExportVisitor : public Visitor {
 public:
 	// Export the City's ID and center coordinates and name.
 	void visitCity(City* city);
@@ -86,8 +84,7 @@ public:
 	void visitResidential(Residential* residential);
 };
 
-class TXTExportVisitor : public Visitor
-{
+class TXTExportVisitor : public Visitor {
 public:
 	//Export the industry's location , center coordinates and filename.
 	void visitCity(City* city);
@@ -99,8 +96,7 @@ public:
 };
 
 ///      CLASS INTERFACE
-class Application
-{
+class Application {
 private:
 	vector<Node*> set_of_shape;
 	vector<vector<int>> Map_Txt;

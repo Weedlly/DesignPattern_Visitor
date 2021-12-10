@@ -23,12 +23,9 @@ Node::Node(int x, int y, int len, int wid, string name) : Node(x, y, name) {
 //// Optimize constructor //end
 
 bool CheckNodeIsExist(int length, int width, int x, int y, vector<vector<int>> Map_Txt) {
-	for (int i = x; i < x + length; i++)
-	{
-		for (int j = y; j < y + width; j++)
-		{
-			if (Map_Txt[i][j] == 1)
-			{
+	for (int i = x; i < x + length; i++) {
+		for (int j = y; j < y + width; j++) {
+			if (Map_Txt[i][j] == 1) {
 				return false;
 			}
 		}
@@ -61,7 +58,7 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 
 		bool overlap = 1;
 		if (type == "Industry") {
-			
+
 
 			getline(fin, tmp, ' ');
 			int stf = stoi(tmp);
@@ -145,10 +142,8 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 		// Add to MapTxt
 
 		if (!overlap) {
-			for (int i = x_; i < x_ + length; i++)
-			{
-				for (int j = y_; j < y_ + width; j++)
-				{
+			for (int i = x_; i < x_ + length; i++) {
+				for (int j = y_; j < y_ + width; j++) {
 					Map_Txt[i][j] = 1;
 				}
 			}

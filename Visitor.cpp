@@ -92,27 +92,79 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 
 	doc.SaveFile(&fileName[0]);
 }
-
+// Code by Duong ver 7
 void XMLExportVisitor::visitFactory(Factory* factory) {
-	// .........
+	string fileName = "Factory_" + factory->getName() + ".xml";
+	TiXmlDocument doc;
+	export_TypeXML(doc, factory, "Factory");
+	TiXmlElement* root = doc.FirstChildElement();
+
+	string StatusVal = to_string(factory->getStatus());
+	string ModeVal = factory->getMode();
+	TiXmlElement* Status = new TiXmlElement("Status");
+	TiXmlText* StatusContent = new TiXmlText(&StatusVal[0]);
+	root->LinkEndChild(Status);
+	TiXmlElement* Mode = new TiXmlElement("Mode");
+	TiXmlText* ModeContent = new TiXmlText(&ModeVal[0]);
+	root->LinkEndChild(Mode);
+	doc.SaveFile(&fileName[0]);
 }
 
 void XMLExportVisitor::visitConstruction(Construction* construction) {
-	// .........
-}
+	string fileName = "construction_" + construction->getName() + ".xml";
+	TiXmlDocument doc;
+	export_TypeXML(doc, construction, "Factory");
+	TiXmlElement* root = doc.FirstChildElement();
 
+	string EmployeeVal = to_string(construction->getEmployee());
+	TiXmlElement* Employee = new TiXmlElement("Employee");
+	TiXmlText* EmployeeContent = new TiXmlText(&EmployeeVal[0]);
+	root->LinkEndChild(Employee);
+	Employee->LinkEndChild(EmployeeContent);
+	doc.SaveFile(&fileName[0]);
+}
+// code by An ver 7
 void XMLExportVisitor::visitCommercial(Commercial* commercial) {
-	// .........
+	string fileName = "Commercial_" + commercial->getName() + ".xml";
+	TiXmlDocument doc;
+	export_TypeXML(doc, commercial, "Commercial");
+
+	TiXmlElement* root = doc.FirstChildElement();
+	TiXmlElement* Status = new TiXmlElement("1");
+	root->LinkEndChild(Status);
+	doc.SaveFile(&fileName[0]);
 }
 void XMLExportVisitor::visitResidential(Residential* residential) {
-	// .........
+	string fileName = "Residential_" + residential->getName() + ".xml";
+	TiXmlDocument doc;
+	export_TypeXML(doc, residential, "Residential");
+
+	TiXmlElement* root = doc.FirstChildElement();
+	string populationVal = to_string(residential->getPopulation());
+	TiXmlElement* population = new TiXmlElement("Population");
+	TiXmlText* populationContent = new TiXmlText(&populationVal[0]);
+	vector<string> getApartment = residential->getNOA();
+	string nameOfapartments = "";
+	for (int i = 0; i < getApartment.size(); i++) {
+		if (i == getApartment.size() - 1) {
+			nameOfapartments = nameOfapartments + getApartment[i];
+		}
+		else {
+			nameOfapartments = nameOfapartments + getApartment[i] + " ";
+		}
+	}
+	TiXmlElement* Apartments = new TiXmlElement("nameOfApartment");
+	TiXmlText* ApartmentContent = new TiXmlText(&nameOfapartments[0]);
+	root->LinkEndChild(population);
+	population->LinkEndChild(populationContent);
+	root->LinkEndChild(Apartments);
+	Apartments->LinkEndChild(ApartmentContent);
+	doc.SaveFile(&fileName[0]);
 }
 
 void export_MapCSV(Node* node, ofstream& fout) {  // new code by D ver6
-	for (int i = 0; i < Map_Size; i++)
-	{
-		for (int j = 0; j < Map_Size; j++)
-		{
+	for (int i = 0; i < Map_Size; i++) {
+		for (int j = 0; j < Map_Size; j++) {
 			if ((i >= node->getLocation().x_ && i < node->getLocation().x_ + node->getSize().length) && (j >= node->getLocation().y_ && j < node->getLocation().y_ + node->getSize().width)) {
 				fout << 1 << ",";
 			}
@@ -180,7 +232,7 @@ void CSVExportVisitor::visitResidential(Residential* residential) {  // new code
 
 	export_MapCSV(residential, fout);
 	fout << endl << endl;
-	fout << "Population: " << residential->getPop() << endl;
+	fout << "Population: " << residential->getPopulation() << endl;
 	fout << "Apartment Names: ";
 	for (int i = 0; i < residential->getNOA().size(); i++) {
 		fout << residential->getNOA()[i] << ",";
@@ -192,10 +244,8 @@ void CSVExportVisitor::visitResidential(Residential* residential) {  // new code
 // TXT export
 
 void export_MapTXT(Node* node, ofstream& fout) {  // new code by Hoang ver7
-	for (int i = 0; i < Map_Size; i++)
-	{
-		for (int j = 0; j < Map_Size; j++)
-		{
+	for (int i = 0; i < Map_Size; i++) {
+		for (int j = 0; j < Map_Size; j++) {
 			if ((i >= node->getLocation().x_ && i < node->getLocation().x_ + node->getSize().length) && (j >= node->getLocation().y_ && j < node->getLocation().y_ + node->getSize().width)) {
 				fout << 1 << " ";
 			}
@@ -263,7 +313,7 @@ void TXTExportVisitor::visitResidential(Residential* residential) {  // new code
 
 	export_MapTXT(residential, fout);
 	fout << endl << endl;
-	fout << "Population: " << residential->getPop() << endl;
+	fout << "Population: " << residential->getPopulation() << endl;
 	fout << "Apartment Names: ";
 	for (int i = 0; i < residential->getNOA().size(); i++) {
 		fout << residential->getNOA()[i] << ",";
@@ -275,8 +325,7 @@ void TXTExportVisitor::visitResidential(Residential* residential) {  // new code
 /// Application : Interface
 Application::Application(string readFileName) {
 	Map_Txt.resize(Map_Size);
-	for (int i = 0; i < Map_Size; i++)
-	{
+	for (int i = 0; i < Map_Size; i++) {
 		Map_Txt[i].resize(Map_Size);
 	}
 
@@ -288,8 +337,7 @@ vector<Node*> Application::getNodeArr() {
 }
 void Application::export_XML() {
 	XMLExportVisitor* customer = new XMLExportVisitor;
-	for (int i = 0; i < set_of_shape.size(); i++)
-	{
+	for (int i = 0; i < set_of_shape.size(); i++) {
 		set_of_shape[i]->accept(customer);
 	}
 	delete customer;
@@ -297,8 +345,7 @@ void Application::export_XML() {
 
 void Application::export_TXT() {
 	TXTExportVisitor* customer = new TXTExportVisitor; // new code by Hoang ver7
-	for (int i = 0; i < set_of_shape.size(); i++)
-	{
+	for (int i = 0; i < set_of_shape.size(); i++) {
 		set_of_shape[i]->accept(customer);
 	}
 	delete customer;
@@ -306,8 +353,7 @@ void Application::export_TXT() {
 
 void Application::export_CSV() {
 	CSVExportVisitor* customer = new CSVExportVisitor;
-	for (int i = 0; i < set_of_shape.size(); i++)
-	{
+	for (int i = 0; i < set_of_shape.size(); i++) {
 		set_of_shape[i]->accept(customer);
 	}
 	delete customer;

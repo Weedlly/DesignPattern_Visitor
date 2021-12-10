@@ -16,8 +16,7 @@ struct Size {
 	int width;
 };
 // Base class Shape
-class Node
-{
+class Node {
 protected:
 	Location location_;
 	Size size_;
@@ -44,8 +43,7 @@ public:
 
 // Derived classes of Node
 // City
-class City : public Node
-{
+class City : public Node {
 private:
 	int population_;
 public:
@@ -64,8 +62,7 @@ public:
 };
 
 // Industry
-class Industry : public Node
-{
+class Industry : public Node {
 private:
 	long int staff;
 	string form;
@@ -84,15 +81,13 @@ public:
 
 		cout << form << endl;
 	}
-
 	string getForm() {
 		return form;
 	}
 };
 
 // Construction
-class Construction : public Node
-{
+class Construction : public Node {
 private:
 	int staff;
 	string type;
@@ -114,8 +109,7 @@ public:
 };
 
 // Factory
-class Factory : public Node
-{
+class Factory : public Node {
 private:
 	bool status;
 	string modeOfOperation;
@@ -140,8 +134,7 @@ public:
 };
 
 // Commercial
-class Commercial : public Node
-{
+class Commercial : public Node {
 private:
 	bool status;
 public:
@@ -175,7 +168,7 @@ public:
 		for (int i = 0; i < nameOfApartment.size(); i++)
 			cout << nameOfApartment[i] << " ";
 	}
-	int getPop() {
+	int getPopulation() {
 		return population;
 	}
 	vector<string>getNOA() {
