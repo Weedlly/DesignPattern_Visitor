@@ -1,33 +1,21 @@
 #include "Node.h"
 #include "Visitor.h"
 
-// Export the City's ID and center coordinates and name.
-// XML export
-//void XMLExportVisitor::countPopulation(City* city) {
-//	cout << "City's population:" << city->getPopulation();   // Error
-//}
-//
-//void XMLExportVisitor::citySquare(City* city) {
-//	cout << "City's square:" << city->getPopulation();
-//}
-//Export the industry's ID, center coordinates and name.
-//void XMLExportVisitor::countEmployee(Industry* industry) {
-//	cout << "Industry's Employee:" << industry->getEmployee();			// Error
-//}
-//void XMLExportVisitor::industrySquare(Industry* industry) {
-//	cout << "Industry's square" << industry->square();
-//}
-//void XMLExportVisitor::countEmployee(Construction* construction) {
-//	cout << "Construction's Employee:" << construction->getEmployee();			// Error
-//}
-//void XMLExportVisitor::constructionSquare(Construction* construction) {
-//	cout << "Construction's square" << construction->square();
-//}
-//void XMLExportVisitor::commercialSquare(Commercial* commercial) {			// Error
-//	cout << "Commercial's square:" << commercial->square();
-//} //new add
-// Export the Residential's ID, center coordinates and name.
+// Two function help to get directory and create new directory
+std::string GetCurrentDirectory()				// Hoang ver7
+{
+	char buffer[MAX_PATH];
+	GetModuleFileNameA(NULL, buffer, MAX_PATH);
+	std::string::size_type pos = std::string(buffer).find_last_of("\\/");
+	return std::string(buffer).substr(0, pos);
+}
+wstring StringToWString(const std::string& s)				// Hoang ver7
+{
+	std::wstring wsTmp(s.begin(), s.end());
 
+	return wsTmp;
+}
+//
 void export_TypeXML(TiXmlDocument& doc, Node* node, string _typeName) {				// Hoang ver7
 	TiXmlDeclaration* dec = new TiXmlDeclaration("1.0", "utf-8", "");
 	doc.LinkEndChild(dec);
@@ -63,12 +51,13 @@ void export_TypeXML(TiXmlDocument& doc, Node* node, string _typeName) {				// Ho
 }
 
 void XMLExportVisitor::visitCity(City* city) {
-	string fileName = "City_" + city->getName() + ".xml";
+	string Folder = GetCurrentDirectory() + "\\CityFolder";							// Hoang ver8
+	string fileName = Folder + "\\City_" + city->getName() + ".xml";				//push all file to folder
+
 	TiXmlDocument doc;
 	export_TypeXML(doc, city, "City");
 
 	TiXmlElement* root = doc.FirstChildElement();									// Hoang ver7
-
 	string populationVal = to_string(city->getPopulation());
 	TiXmlElement* population = new TiXmlElement("Population");
 	TiXmlText* populationContent = new TiXmlText(&populationVal[0]);
@@ -78,7 +67,9 @@ void XMLExportVisitor::visitCity(City* city) {
 	doc.SaveFile(&fileName[0]);
 }
 void XMLExportVisitor::visitIndustry(Industry* industry) {
-	string fileName = "Industry_" + industry->getName() + ".xml";
+	string Folder = GetCurrentDirectory() + "\\IndustryFolder";							// Hoang ver8
+	string fileName = Folder + "\\Industry_" + industry->getName() + ".xml";			//push all file to folder
+
 	TiXmlDocument doc;
 	export_TypeXML(doc, industry, "Industry");
 	// Hoang ver7
@@ -94,7 +85,9 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 }
 // Code by Duong ver 7
 void XMLExportVisitor::visitFactory(Factory* factory) {
-	string fileName = "Factory_" + factory->getName() + ".xml";
+	string Folder = GetCurrentDirectory() + "\\FactoryFolder";							// Hoang ver8
+	string fileName = Folder + "\\Factory_" + factory->getName() + ".xml";				//push all file to folder
+
 	TiXmlDocument doc;
 	export_TypeXML(doc, factory, "Factory");
 	TiXmlElement* root = doc.FirstChildElement();
@@ -111,7 +104,9 @@ void XMLExportVisitor::visitFactory(Factory* factory) {
 }
 
 void XMLExportVisitor::visitConstruction(Construction* construction) {
-	string fileName = "construction_" + construction->getName() + ".xml";
+	string Folder = GetCurrentDirectory() + "\\ConstructionFolder";						// Hoang ver8
+	string fileName = Folder + "\\construction_" + construction->getName() + ".xml";	//push all file to folder
+
 	TiXmlDocument doc;
 	export_TypeXML(doc, construction, "Factory");
 	TiXmlElement* root = doc.FirstChildElement();
@@ -125,7 +120,9 @@ void XMLExportVisitor::visitConstruction(Construction* construction) {
 }
 // code by An ver 7
 void XMLExportVisitor::visitCommercial(Commercial* commercial) {
-	string fileName = "Commercial_" + commercial->getName() + ".xml";
+	string Folder = GetCurrentDirectory() + "\\CommercialFolder";							// Hoang ver8
+	string fileName = Folder + "\\Commercial_" + commercial->getName() + ".xml";			//push all file to folder
+
 	TiXmlDocument doc;
 	export_TypeXML(doc, commercial, "Commercial");
 
@@ -135,7 +132,9 @@ void XMLExportVisitor::visitCommercial(Commercial* commercial) {
 	doc.SaveFile(&fileName[0]);
 }
 void XMLExportVisitor::visitResidential(Residential* residential) {
-	string fileName = "Residential_" + residential->getName() + ".xml";
+	string Folder = GetCurrentDirectory() + "\\ResidentialFolder";							//push all file to folder
+	string fileName = Folder + "\\Residential_" + residential->getName() + ".xml";			// Hoang ver8
+
 	TiXmlDocument doc;
 	export_TypeXML(doc, residential, "Residential");
 
@@ -324,6 +323,17 @@ void TXTExportVisitor::visitResidential(Residential* residential) {  // new code
 
 /// Application : Interface
 Application::Application(string readFileName) {
+	//new code push all file to folder												// Hoang ver8
+	//string Folder = GetCurrentDirectory() + "\\ResidentialFolder";
+	//wstring FilePath = StringToWString(Folder);									// Full code
+	//CreateDirectory(FilePath.c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CityFolder").c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ConstructionFolder").c_str(), NULL);			//optimize code
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CommercialFolder").c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\IndustryFolder").c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ResidentialFolder").c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\FactoryFolder").c_str(), NULL);
+
 	Map_Txt.resize(Map_Size);
 	for (int i = 0; i < Map_Size; i++) {
 		Map_Txt[i].resize(Map_Size);
