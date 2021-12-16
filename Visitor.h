@@ -7,6 +7,7 @@
 #include <fstream>
 #include "Node.h"
 #include "tinyxml.h"
+#include <Windows.h>
 
 using namespace std;
 
@@ -95,6 +96,17 @@ public:
 	void visitResidential(Residential* residential);
 };
 
+class TaxVisitor :public Visitor { // D ver 8
+public:
+	// Calculate the tax of Nodes 
+	void visitCity(City* city);
+	void visitIndustry(Industry* industry);
+	void visitFactory(Factory* factory);
+	void visitCommercial(Commercial* commercial);
+	void visitConstruction(Construction* construction);
+	void visitResidential(Residential* residential);
+};
+
 ///      CLASS INTERFACE
 class Application {
 private:
@@ -107,6 +119,7 @@ public:
 	void export_XML();
 	void export_TXT(); // new code by Hoang ver7
 	void export_CSV(); // new code by D ver6
+	void console_Tax(); // D ver 8
 };
 
 #endif // !Visitor_h
