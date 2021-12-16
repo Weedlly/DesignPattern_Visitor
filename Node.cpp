@@ -73,10 +73,13 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 		else if (type == "Factory") {
 			getline(fin, tmp, ' ');
 			bool sta = stoi(tmp);
-			getline(fin, tmp, '\n');
+			getline(fin, tmp, ' ');
 			string mode = tmp;
+			getline(fin, tmp, '\n');  // D ver 8
+			int nP = stoi(tmp);
+
 			if (CheckNodeIsExist(length, width, x_, y_, Map_Txt)) {
-				Factory* fac = new Factory(length, width, x_, y_, name_, sta, mode);
+				Factory* fac = new Factory(length, width, x_, y_, name_, sta, mode, nP);
 				node.push_back(fac);
 				overlap = 0;
 			}
@@ -188,11 +191,12 @@ Industry::Industry(int len, int wid, int x, int y, string name, int s, string fo
 }
 
 // Factory
-Factory::Factory(int len, int wid, int x, int y, string name, bool sta, string mode) : Node(x, y, name) {
+Factory::Factory(int len, int wid, int x, int y, string name, bool sta, string mode, int nP) : Node(x, y, name) {
 	size_.length = len;
 	size_.width = wid;
 	status = sta;
 	modeOfOperation = mode;
+	numProduct = nP;  // D ver 8
 }
 void Factory::accept(Visitor* v) {
 	v->visitFactory(this);
