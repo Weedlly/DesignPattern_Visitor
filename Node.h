@@ -113,9 +113,10 @@ class Factory : public Node {
 private:
 	bool status;
 	string modeOfOperation;
+	int numProduct; // D ver 8
 public:
-	Factory() :Node(), status(0), modeOfOperation("") {}
-	Factory(int len, int wid, int x, int y, string name, bool sta, string mode);
+	Factory() :Node(), status(0), modeOfOperation(""), numProduct(0) {}
+	Factory(int len, int wid, int x, int y, string name, bool sta, string mode, int nP);
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << status << " ";
 
