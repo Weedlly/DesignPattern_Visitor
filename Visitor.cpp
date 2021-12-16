@@ -51,7 +51,7 @@ void export_TypeXML(TiXmlDocument& doc, Node* node, string _typeName) {				// Ho
 }
 
 void XMLExportVisitor::visitCity(City* city) {
-	string Folder = GetCurrentDirectory() + "\\CityFolder";							// Hoang ver8
+	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\City_" + city->getName() + ".xml";				//push all file to folder
 
 	TiXmlDocument doc;
@@ -67,7 +67,7 @@ void XMLExportVisitor::visitCity(City* city) {
 	doc.SaveFile(&fileName[0]);
 }
 void XMLExportVisitor::visitIndustry(Industry* industry) {
-	string Folder = GetCurrentDirectory() + "\\IndustryFolder";							// Hoang ver8
+	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\Industry_" + industry->getName() + ".xml";			//push all file to folder
 
 	TiXmlDocument doc;
@@ -85,7 +85,7 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 }
 // Code by Duong ver 7
 void XMLExportVisitor::visitFactory(Factory* factory) {
-	string Folder = GetCurrentDirectory() + "\\FactoryFolder";							// Hoang ver8
+	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\Factory_" + factory->getName() + ".xml";				//push all file to folder
 
 	TiXmlDocument doc;
@@ -104,7 +104,7 @@ void XMLExportVisitor::visitFactory(Factory* factory) {
 }
 
 void XMLExportVisitor::visitConstruction(Construction* construction) {
-	string Folder = GetCurrentDirectory() + "\\ConstructionFolder";						// Hoang ver8
+	string Folder = GetCurrentDirectory() + "\\XMLExport";						// Hoang ver8
 	string fileName = Folder + "\\construction_" + construction->getName() + ".xml";	//push all file to folder
 
 	TiXmlDocument doc;
@@ -120,7 +120,7 @@ void XMLExportVisitor::visitConstruction(Construction* construction) {
 }
 // code by An ver 7
 void XMLExportVisitor::visitCommercial(Commercial* commercial) {
-	string Folder = GetCurrentDirectory() + "\\CommercialFolder";							// Hoang ver8
+	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\Commercial_" + commercial->getName() + ".xml";			//push all file to folder
 
 	TiXmlDocument doc;
@@ -132,7 +132,7 @@ void XMLExportVisitor::visitCommercial(Commercial* commercial) {
 	doc.SaveFile(&fileName[0]);
 }
 void XMLExportVisitor::visitResidential(Residential* residential) {
-	string Folder = GetCurrentDirectory() + "\\ResidentialFolder";							//push all file to folder
+	string Folder = GetCurrentDirectory() + "\\XMLExport";							//push all file to folder
 	string fileName = Folder + "\\Residential_" + residential->getName() + ".xml";			// Hoang ver8
 
 	TiXmlDocument doc;
@@ -174,7 +174,9 @@ void export_MapCSV(Node* node, ofstream& fout) {  // new code by D ver6
 }
 
 void CSVExportVisitor::visitCity(City* city) {   // new code by D ver6
-	string nameF = "City_" + city->getName() + ".csv";
+	string Folder = GetCurrentDirectory() + "\\CSVExport";								  //push to export folder
+	string nameF = Folder + "\\City_" + city->getName() + ".csv";
+
 	ofstream fout(nameF);
 
 	export_MapCSV(city, fout);
@@ -184,7 +186,9 @@ void CSVExportVisitor::visitCity(City* city) {   // new code by D ver6
 }
 
 void CSVExportVisitor::visitCommercial(Commercial* commercial) { // new code by An
-	string nameF = "Commercial_" + commercial->getName() + ".csv";
+	string Folder = GetCurrentDirectory() + "\\CSVExport";								  //push to export folder
+	string nameF = Folder + "\\Commercial_" + commercial->getName() + ".csv";
+
 	ofstream fout(nameF);
 
 	export_MapCSV(commercial, fout);
@@ -194,7 +198,10 @@ void CSVExportVisitor::visitCommercial(Commercial* commercial) { // new code by 
 }
 
 void CSVExportVisitor::visitConstruction(Construction* construction) { // new code by An
-	string nameF = "Construction_" + construction->getName() + ".csv";
+	/*string nameF = "Construction_" + construction->getName() + ".csv";*/
+	string Folder = GetCurrentDirectory() + "\\CSVExport";								  //push to export folder
+	string nameF = Folder + "\\Construction_" + construction->getName() + ".csv";
+
 	ofstream fout(nameF);
 
 	export_MapCSV(construction, fout);
@@ -204,7 +211,9 @@ void CSVExportVisitor::visitConstruction(Construction* construction) { // new co
 }
 
 void CSVExportVisitor::visitFactory(Factory* factory) {    // new code by D ver6
-	string nameF = "Factory_" + factory->getName() + ".csv";
+	string Folder = GetCurrentDirectory() + "\\CSVExport";								  //push to export folder
+	string nameF = Folder + "\\Factory_" + factory->getName() + ".csv";
+
 	ofstream fout(nameF);
 
 	export_MapCSV(factory, fout);
@@ -215,7 +224,9 @@ void CSVExportVisitor::visitFactory(Factory* factory) {    // new code by D ver6
 }
 
 void CSVExportVisitor::visitIndustry(Industry* industry) {    // new code by D ver6
-	string nameF = "Industry_" + industry->getName() + ".csv";
+	string Folder = GetCurrentDirectory() + "\\CSVExport";								  //push to export folder
+	string nameF = Folder + "\\Industry_" + industry->getName() + ".csv";
+
 	ofstream fout(nameF);
 
 	export_MapCSV(industry, fout);
@@ -226,7 +237,9 @@ void CSVExportVisitor::visitIndustry(Industry* industry) {    // new code by D v
 }
 
 void CSVExportVisitor::visitResidential(Residential* residential) {  // new code by D ver6
-	string nameF = "Residential_" + residential->getName() + ".csv";
+	string Folder = GetCurrentDirectory() + "\\CSVExport";								  //push to export folder
+	string nameF = Folder + "\\Residential_" + residential->getName() + ".csv";
+
 	ofstream fout(nameF);
 
 	export_MapCSV(residential, fout);
@@ -255,7 +268,9 @@ void export_MapTXT(Node* node, ofstream& fout) {  // new code by Hoang ver7
 }
 
 void TXTExportVisitor::visitCity(City* city) {   // new code by Hoang ver7
-	string nameF = "City_" + city->getName() + ".txt";
+	string Folder = GetCurrentDirectory() + "\\TXTExport";								  //push to export folder
+	string nameF = Folder + "\\City_" + city->getName() + ".txt";
+
 	ofstream fout(nameF);
 
 	export_MapTXT(city, fout);
@@ -265,7 +280,9 @@ void TXTExportVisitor::visitCity(City* city) {   // new code by Hoang ver7
 }
 
 void TXTExportVisitor::visitCommercial(Commercial* commercial) { // new code by Hoang ver 7
-	string nameF = "Commercial_" + commercial->getName() + ".txt";
+	string Folder = GetCurrentDirectory() + "\\TXTExport";								  //push to export folder
+	string nameF = Folder + "\\Commercial_" + commercial->getName() + ".txt";
+
 	ofstream fout(nameF);
 
 	export_MapTXT(commercial, fout);
@@ -275,7 +292,9 @@ void TXTExportVisitor::visitCommercial(Commercial* commercial) { // new code by 
 }
 
 void TXTExportVisitor::visitConstruction(Construction* construction) { // new code by Hoang ver7
-	string nameF = "Construction_" + construction->getName() + ".txt";
+	string Folder = GetCurrentDirectory() + "\\TXTExport";								  //push to export folder
+	string nameF = Folder + "\\Construction_" + construction->getName() + ".txt";
+
 	ofstream fout(nameF);
 
 	export_MapTXT(construction, fout);
@@ -285,7 +304,9 @@ void TXTExportVisitor::visitConstruction(Construction* construction) { // new co
 }
 
 void TXTExportVisitor::visitFactory(Factory* factory) {    // new code by Hoang ver7
-	string nameF = "Factory_" + factory->getName() + ".txt";
+	string Folder = GetCurrentDirectory() + "\\TXTExport";								  //push to export folder
+	string nameF = Folder + "\\Factory_" + factory->getName() + ".txt";
+
 	ofstream fout(nameF);
 
 	export_MapTXT(factory, fout);
@@ -296,7 +317,9 @@ void TXTExportVisitor::visitFactory(Factory* factory) {    // new code by Hoang 
 }
 
 void TXTExportVisitor::visitIndustry(Industry* industry) {    // new code by Hoang ver7
-	string nameF = "Industry_" + industry->getName() + ".txt";
+	string Folder = GetCurrentDirectory() + "\\TXTExport";								  //push to export folder
+	string nameF = Folder + "\\Industry_" + industry->getName() + ".txt";
+
 	ofstream fout(nameF);
 
 	export_MapTXT(industry, fout);
@@ -307,7 +330,9 @@ void TXTExportVisitor::visitIndustry(Industry* industry) {    // new code by Hoa
 }
 
 void TXTExportVisitor::visitResidential(Residential* residential) {  // new code by Hoang ver7
-	string nameF = "Residential_" + residential->getName() + ".txt";
+	string Folder = GetCurrentDirectory() + "\\TXTExport";								  //push to export folder
+	string nameF = Folder + "\\Residential_" + residential->getName() + ".txt";
+
 	ofstream fout(nameF);
 
 	export_MapTXT(residential, fout);
@@ -327,12 +352,20 @@ Application::Application(string readFileName) {
 	//string Folder = GetCurrentDirectory() + "\\ResidentialFolder";
 	//wstring FilePath = StringToWString(Folder);									// Full code
 	//CreateDirectory(FilePath.c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CityFolder").c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ConstructionFolder").c_str(), NULL);			//optimize code
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CommercialFolder").c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\IndustryFolder").c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ResidentialFolder").c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\FactoryFolder").c_str(), NULL);
+	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CityFolder").c_str(), NULL);
+	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ConstructionFolder").c_str(), NULL);			//optimize code
+	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CommercialFolder").c_str(), NULL);
+	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\IndustryFolder").c_str(), NULL);
+	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ResidentialFolder").c_str(), NULL);
+	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\FactoryFolder").c_str(), NULL);
+
+	//new code push all file to export type folder												// Hoang ver8
+	string Folder = GetCurrentDirectory() + "\\XMLExport";
+	wstring FilePath = StringToWString(Folder);									// Full code
+	CreateDirectory(FilePath.c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\XMLExport").c_str(), NULL);
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\TXTExport").c_str(), NULL);			//optimize code
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CSVExport").c_str(), NULL);
 
 	Map_Txt.resize(Map_Size);
 	for (int i = 0; i < Map_Size; i++) {
