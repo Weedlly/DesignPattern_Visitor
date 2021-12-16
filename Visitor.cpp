@@ -85,6 +85,7 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 }
 // Code by Duong ver 7
 void XMLExportVisitor::visitFactory(Factory* factory) {
+	void XMLExportVisitor::visitFactory(Factory* factory) {
 	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\Factory_" + factory->getName() + ".xml";				//push all file to folder
 
@@ -94,12 +95,19 @@ void XMLExportVisitor::visitFactory(Factory* factory) {
 
 	string StatusVal = to_string(factory->getStatus());
 	string ModeVal = factory->getMode();
+	string ProductVal = to_string(factory->getNumProduct());  // D ver 8
 	TiXmlElement* Status = new TiXmlElement("Status");
 	TiXmlText* StatusContent = new TiXmlText(&StatusVal[0]);
 	root->LinkEndChild(Status);
+	Status->LinkEndChild(StatusContent);
 	TiXmlElement* Mode = new TiXmlElement("Mode");
 	TiXmlText* ModeContent = new TiXmlText(&ModeVal[0]);
 	root->LinkEndChild(Mode);
+	Mode->LinkEndChild(ModeContent);
+	TiXmlElement* Product = new TiXmlElement("Product");
+	TiXmlText* ProductContent = new TiXmlText(&ProductVal[0]);
+	root->LinkEndChild(Product);
+	Product->LinkEndChild(ProductContent);
 	doc.SaveFile(&fileName[0]);
 }
 
@@ -221,7 +229,8 @@ void CSVExportVisitor::visitFactory(Factory* factory) {    // new code by D ver6
 	export_MapCSV(factory, fout);
 	fout << endl << endl;
 	fout << "Status: " << factory->getStatus() << endl;
-	fout << "Mode of operation: " << factory->getMode();
+	fout << "Mode of operation: " << factory->getMode() << endl;
+	fout << "Number of product: " << factory->getNumProduct(); // D ver 8
 	fout.close();
 }
 
@@ -314,7 +323,8 @@ void TXTExportVisitor::visitFactory(Factory* factory) {    // new code by Hoang 
 	export_MapTXT(factory, fout);
 	fout << endl << endl;
 	fout << "Status: " << factory->getStatus() << endl;
-	fout << "Mode of operation: " << factory->getMode();
+	fout << "Mode of operation: " << factory->getMode() << endl;
+	fout << "Number of product: " << factory->getNumProduct();  // D ver 8
 	fout.close();
 }
 
@@ -402,4 +412,92 @@ void Application::export_CSV() {
 		set_of_shape[i]->accept(customer);
 	}
 	delete customer;
+}
+
+void Application::console_Tax() {   // D ver 8
+	TaxVisitor* taxV = new TaxVisitor;
+	for (int i = 0; i < set_of_shape.size(); i++) {
+		set_of_shape[i]->accept(taxV);
+	}
+	delete taxV;
+}	
+	
+	
+// Tax  D ver 8
+void TaxVisitor::visitCity(City* city) {
+	double density = city->getPopulation() / city->square();
+	double tax;
+	if (density > 1000) {
+		tax = 4;
+	}
+	else tax = 2;
+
+	cout << city->getName() << "'s Tax: " << tax * city->getPopulation() << "$" << endl;
+}
+
+void TaxVisitor::visitIndustry(Industry* industry) {
+	double tax;
+
+	if ((int)(industry->getForm().find("creative")) >= 0) {
+		tax = 3;
+	}
+	else if ((int)(industry->getForm().find("energy")) >= 0) {
+		tax = 5;
+	}
+	else if ((int)(industry->getForm().find("chemical")) >= 0) {
+		tax = 6;
+	}
+	else tax = 0;
+	cout << industry->getName() << "'s Tax: " << tax * industry->getEmployee() << "$" << endl;
+}
+
+void TaxVisitor::visitFactory(Factory* factory) {
+	double tax;
+	if (!factory->getStatus())
+		tax = 0;
+	else if(factory->getStatus()){
+		if ((int)(factory->getMode().find("export")) >= 0) {
+			tax = 6;
+		}
+		else if ((int)(factory->getMode().find("consumption")) >= 0) {
+			tax = 5;
+		}
+		else tax = 3;
+	}
+	cout << factory->getName() << "'s Tax: " << tax * factory->getNumProduct() << "$" << endl;
+}
+
+void TaxVisitor::visitCommercial(Commercial* commercial) {
+	double tax;
+	if (!commercial->getStatus())
+		tax = 0;
+	else tax = 9;
+	cout << commercial->getName() << "'s Tax: " << tax * commercial->square() << "$" << endl;
+}
+
+void TaxVisitor::visitConstruction(Construction* construction) {
+	double tax;
+	if ((int)(construction->getType().find("Bay")) >= 0) {
+		tax = 13;
+	}
+	else if ((int)(construction->getType().find("Park")) >= 0) {
+		tax = 10;
+	}
+	else if ((int)(construction->getType().find("Statue")) >= 0) {
+		tax = 3;
+	}
+	else tax = 0;
+	cout << construction->getName() << "'s Tax: " << tax * construction->square() << "$" << endl;
+}
+
+void TaxVisitor::visitResidential(Residential* residential) {
+	double tax;
+	double density = residential->getPopulation() / residential->getNOA().size();
+	if (density > 500) {
+		tax = 6;
+	}
+
+	else tax = 3;
+
+	cout << residential->getName() << "'s Tax: " << tax * residential->getPopulation() << "$" << endl;
 }
