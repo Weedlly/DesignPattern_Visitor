@@ -127,7 +127,9 @@ void XMLExportVisitor::visitCommercial(Commercial* commercial) {
 	export_TypeXML(doc, commercial, "Commercial");
 
 	TiXmlElement* root = doc.FirstChildElement();
-	TiXmlElement* Status = new TiXmlElement("1");
+	string StatusVal = to_string(commercial->getStatus());
+	TiXmlElement* Status = new TiXmlElement("Status");
+	TiXmlText* StatusContent = new TiXmlText(&StatusVal[0]);
 	root->LinkEndChild(Status);
 	doc.SaveFile(&fileName[0]);
 }
