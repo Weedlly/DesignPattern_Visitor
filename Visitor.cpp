@@ -85,7 +85,7 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 }
 // Code by Duong ver 7
 void XMLExportVisitor::visitFactory(Factory* factory) {
-	void XMLExportVisitor::visitFactory(Factory* factory) {
+	//void XMLExportVisitor::visitFactory(Factory* factory) {              // recursion ?
 	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\Factory_" + factory->getName() + ".xml";				//push all file to folder
 
