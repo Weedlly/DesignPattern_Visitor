@@ -98,7 +98,7 @@ public:
 
 class TaxVisitor :public Visitor { // D ver 8
 public:
-	// Calculate the tax of Nodes 
+	// Calculate the tax of Nodes
 	void visitCity(City* city);
 	void visitIndustry(Industry* industry);
 	void visitFactory(Factory* factory);

@@ -420,9 +420,8 @@ void Application::console_Tax() {   // D ver 8
 		set_of_shape[i]->accept(taxV);
 	}
 	delete taxV;
-}	
-	
-	
+}
+
 // Tax  D ver 8
 void TaxVisitor::visitCity(City* city) {
 	double density = city->getPopulation() / city->square();
@@ -455,7 +454,7 @@ void TaxVisitor::visitFactory(Factory* factory) {
 	double tax;
 	if (!factory->getStatus())
 		tax = 0;
-	else if(factory->getStatus()){
+	else if (factory->getStatus()) {
 		if ((int)(factory->getMode().find("export")) >= 0) {
 			tax = 6;
 		}
