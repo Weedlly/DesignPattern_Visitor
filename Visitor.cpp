@@ -360,24 +360,10 @@ void TXTExportVisitor::visitResidential(Residential* residential) {  // new code
 
 /// Application : Interface
 Application::Application(string readFileName) {
-	//new code push all file to folder												// Hoang ver8
-	//string Folder = GetCurrentDirectory() + "\\ResidentialFolder";
+	//new code push all file to export type folder												// Hoang ver8
+	//string Folder = GetCurrentDirectory();
 	//wstring FilePath = StringToWString(Folder);									// Full code
 	//CreateDirectory(FilePath.c_str(), NULL);
-	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CityFolder").c_str(), NULL);
-	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ConstructionFolder").c_str(), NULL);			//optimize code
-	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CommercialFolder").c_str(), NULL);
-	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\IndustryFolder").c_str(), NULL);
-	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\ResidentialFolder").c_str(), NULL);
-	//CreateDirectory(StringToWString(GetCurrentDirectory() + "\\FactoryFolder").c_str(), NULL);
-
-	//new code push all file to export type folder												// Hoang ver8
-	string Folder = GetCurrentDirectory() + "\\XMLExport";
-	wstring FilePath = StringToWString(Folder);									// Full code
-	CreateDirectory(FilePath.c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\XMLExport").c_str(), NULL);
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\TXTExport").c_str(), NULL);			//optimize code
-	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CSVExport").c_str(), NULL);
 
 	Map_Txt.resize(Map_Size);
 	for (int i = 0; i < Map_Size; i++) {
@@ -391,6 +377,7 @@ vector<Node*> Application::getNodeArr() {
 	return set_of_shape;
 }
 void Application::export_XML() {
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\XMLExport").c_str(), NULL);			// Hoang ver8
 	XMLExportVisitor* customer = new XMLExportVisitor;
 	for (int i = 0; i < set_of_shape.size(); i++) {
 		set_of_shape[i]->accept(customer);
@@ -399,6 +386,7 @@ void Application::export_XML() {
 }
 
 void Application::export_TXT() {
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\TXTExport").c_str(), NULL);			// Hoang ver8
 	TXTExportVisitor* customer = new TXTExportVisitor; // new code by Hoang ver7
 	for (int i = 0; i < set_of_shape.size(); i++) {
 		set_of_shape[i]->accept(customer);
@@ -407,6 +395,7 @@ void Application::export_TXT() {
 }
 
 void Application::export_CSV() {
+	CreateDirectory(StringToWString(GetCurrentDirectory() + "\\CSVExport").c_str(), NULL);				// Hoang ver8
 	CSVExportVisitor* customer = new CSVExportVisitor;
 	for (int i = 0; i < set_of_shape.size(); i++) {
 		set_of_shape[i]->accept(customer);
@@ -451,7 +440,7 @@ void TaxVisitor::visitIndustry(Industry* industry) {
 }
 
 void TaxVisitor::visitFactory(Factory* factory) {
-	double tax;
+	double tax = 0;
 	if (!factory->getStatus())
 		tax = 0;
 	else if (factory->getStatus()) {
