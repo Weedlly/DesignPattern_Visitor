@@ -46,6 +46,8 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 		int y_ = 0;
 		string name_ = "";
 		getline(fin, tmp, ' ');
+		if (tmp == "\n") // fix bug by An
+			break;
 		length = stoi(tmp);
 		getline(fin, tmp, ' ');
 		width = stoi(tmp);
