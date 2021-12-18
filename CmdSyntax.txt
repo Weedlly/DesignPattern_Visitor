@@ -1,0 +1,6 @@
+// MAIN_EXPORT is the name of your file !!
+MAIN_EXPORT.exe -tax
+MAIN_EXPORT.exe -export -xml
+MAIN_EXPORT.exe -export -txt
+MAIN_EXPORT.exe -export -csv
+MAIN_EXPORT.exe -export -all
