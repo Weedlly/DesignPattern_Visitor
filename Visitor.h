@@ -8,7 +8,6 @@
 #include "Node.h"
 #include "tinyxml.h"
 #include <Windows.h>
-
 using namespace std;
 
 #define Map_Size  100
@@ -39,26 +38,17 @@ public:
 	// Export the City's ID and center coordinates and name.
 	void visitCity(City* city);
 
-	//void countPopulation(City* city);						// Warning
-	//void citySquare(City* city);
-
 	//Export the industry's ID, center coordinates and name.
 	void visitIndustry(Industry* industry);
 
-	//void countEmployee(Industry* industry);				 // Warning
-	//void industrySquare(Industry* industry);
-	//
 	// Export the Factory's ID, center coordinates and name.
 	void visitFactory(Factory* factory);
 	// Export the Commercial's ID, center coordinates and name.
 	void visitCommercial(Commercial* commercial);
 
-	//void commercialSquare(Commercial* commercial);			// Warning
 
 	// Export the Construction's ID, center coordinates and name.
 	void visitConstruction(Construction* construction);
-	//void countEmployee(Construction* construction);					 // Warning
-	//void constructionSquare(Construction* construction);
 
 	// Export the Residential's ID, center coordinates and name.
 	void visitResidential(Residential* residential);
@@ -98,7 +88,7 @@ public:
 
 class TaxVisitor :public Visitor { // D ver 8
 public:
-	// Calculate the tax of Nodes
+	// Calculate the tax of Nodes 
 	void visitCity(City* city);
 	void visitIndustry(Industry* industry);
 	void visitFactory(Factory* factory);
@@ -106,5 +96,8 @@ public:
 	void visitConstruction(Construction* construction);
 	void visitResidential(Residential* residential);
 };
+
+
+
 
 #endif // !Visitor_h

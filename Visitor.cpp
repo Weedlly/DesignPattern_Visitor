@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "Visitor.h"
+#include "CommonFunction.h"
 
 //
 void export_TypeXML(TiXmlDocument& doc, Node* node, string _typeName) {				// Hoang ver7
@@ -71,7 +72,6 @@ void XMLExportVisitor::visitIndustry(Industry* industry) {
 }
 // Code by Duong ver 7
 void XMLExportVisitor::visitFactory(Factory* factory) {
-	//void XMLExportVisitor::visitFactory(Factory* factory) {              // recursion ?
 	string Folder = GetCurrentDirectory() + "\\XMLExport";							// Hoang ver8
 	string fileName = Folder + "\\Factory_" + factory->getName() + ".xml";				//push all file to folder
 
@@ -344,6 +344,8 @@ void TXTExportVisitor::visitResidential(Residential* residential) {  // new code
 	fout.close();
 }
 
+
+
 // Tax  D ver 8
 void TaxVisitor::visitCity(City* city) {
 	double density = city->getPopulation() / city->square();
@@ -373,10 +375,10 @@ void TaxVisitor::visitIndustry(Industry* industry) {
 }
 
 void TaxVisitor::visitFactory(Factory* factory) {
-	double tax = 0;
+	double tax;
 	if (!factory->getStatus())
 		tax = 0;
-	else if (factory->getStatus()) {
+	else if(factory->getStatus()){
 		if ((int)(factory->getMode().find("export")) >= 0) {
 			tax = 6;
 		}

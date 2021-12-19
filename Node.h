@@ -54,11 +54,12 @@ public:
 		return population_;
 	}
 	float square() {
-		return (float)size_.length * size_.width;
+		return size_.length * size_.width;
 	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << population_ << endl;
 	}
+
 };
 
 // Industry
@@ -74,10 +75,11 @@ public:
 		return staff;
 	}
 	float square() {
-		return (float)size_.length * size_.width;
+		return size_.length * size_.width;
 	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << staff << " ";
+
 		cout << form << endl;
 	}
 	string getForm() {
@@ -98,14 +100,15 @@ public:
 		return staff;
 	}
 	float square() {
-		return (float)size_.length * size_.width;
-	}
-	string getType() {
-		return type;
+		return size_.length * size_.width;
 	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << staff << " ";
+
 		cout << type << endl;
+	}
+	string getType() {
+		return type;
 	}
 };
 
@@ -123,9 +126,7 @@ public:
 
 		cout << modeOfOperation << endl;
 	}
-	int getNumProduct() {
-		return numProduct;
-	}
+
 	bool getStatus() {
 		return status;
 	}
@@ -133,7 +134,9 @@ public:
 	string getMode() {
 		return modeOfOperation;
 	}
-
+	int getNumProduct() {
+		return numProduct;
+	}
 	void accept(Visitor* v);
 };
 
@@ -145,7 +148,7 @@ public:
 	Commercial(int len, int wid, int x, int y, string name, bool sta);
 	void accept(Visitor* v);
 	float square() {//new add
-		return (float)size_.length * size_.width;
+		return size_.length * size_.width;
 	}
 	bool getStatus()
 	{
@@ -179,5 +182,6 @@ public:
 		return nameOfApartment;
 	}
 };
+
 
 #endif // !Node_h
