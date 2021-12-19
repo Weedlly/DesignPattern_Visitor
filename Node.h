@@ -180,6 +180,4 @@ public:
 	}
 };
 
-bool CheckNodeIsExist(int length, int width, int x, int y, vector<vector<int>> Map_Txt);
-vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt);
 #endif // !Node_h
