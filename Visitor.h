@@ -107,19 +107,4 @@ public:
 	void visitResidential(Residential* residential);
 };
 
-///      CLASS INTERFACE
-class Application {
-private:
-	vector<Node*> set_of_shape;
-	vector<vector<int>> Map_Txt;
-
-public:
-	Application(string readFileName);
-	vector<Node*> getNodeArr();
-	void export_XML();
-	void export_TXT(); // new code by Hoang ver7
-	void export_CSV(); // new code by D ver6
-	void console_Tax(); // D ver 8
-};
-
 #endif // !Visitor_h
