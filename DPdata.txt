@@ -1,6 +1,6 @@
 City 12 10 1 2 DucAnCity 100000
 Commercial 4 3 8 9 WinDow 1
 Construction 3 3 13 14 AnBay 200 Bay
-Industry 7 8 16 17 D_Industry 400 chemical
+Industry 2 3 16 17 D_Industry 400 chemical
 Factory 3 3 24 25 D_Factory 1 non 1200
-Residential 3 2 40 40 D_Residential 12000 A1 A2 A3 A4 A5 A6 A7 A8 A9
+Residential 3 4 40 40 D_Residential 12000 A1 A2 A3 A4 A5 A6 A7 A8 A9

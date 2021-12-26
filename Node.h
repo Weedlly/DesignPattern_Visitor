@@ -53,13 +53,9 @@ public:
 	int getPopulation() {
 		return population_;
 	}
-	float square() {
-		return size_.length * size_.width;
-	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << population_ << endl;
 	}
-
 };
 
 // Industry
@@ -74,16 +70,12 @@ public:
 	int getEmployee() {
 		return staff;
 	}
-	float square() {
-		return size_.length * size_.width;
+	string getForm() {
+		return form;
 	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << staff << " ";
-
 		cout << form << endl;
-	}
-	string getForm() {
-		return form;
 	}
 };
 
@@ -99,12 +91,8 @@ public:
 	int getEmployee() {
 		return staff;
 	}
-	float square() {
-		return size_.length * size_.width;
-	}
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << staff << " ";
-
 		cout << type << endl;
 	}
 	string getType() {
@@ -123,14 +111,11 @@ public:
 	Factory(int len, int wid, int x, int y, string name, bool sta, string mode, int nP);
 	void print() override {
 		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << status << " ";
-
 		cout << modeOfOperation << endl;
 	}
-
 	bool getStatus() {
 		return status;
 	}
-
 	string getMode() {
 		return modeOfOperation;
 	}
@@ -147,9 +132,6 @@ private:
 public:
 	Commercial(int len, int wid, int x, int y, string name, bool sta);
 	void accept(Visitor* v);
-	float square() {//new add
-		return size_.length * size_.width;
-	}
 	bool getStatus()
 	{
 		return status;
@@ -169,19 +151,17 @@ public:
 	Residential() :Node(), population(0), nameOfApartment(NULL) {}
 	Residential(int len, int wid, int x, int y, string name, int pop, vector<string> noA);
 	void accept(Visitor* v);
-
-	void print() override {
-		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << population << " ";
-		for (int i = 0; i < nameOfApartment.size(); i++)
-			cout << nameOfApartment[i] << " ";
-	}
 	int getPopulation() {
 		return population;
 	}
 	vector<string>getNOA() {
 		return nameOfApartment;
 	}
+	void print() override {
+		cout << size_.length << " " << size_.width << " " << location_.x_ << " " << location_.y_ << " " << name_ << " " << population << " ";
+		for (int i = 0; i < nameOfApartment.size(); i++)
+			cout << nameOfApartment[i] << " ";
+	}
 };
-
 
 #endif // !Node_h

@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "Visitor.h"
+#include "CommonFunction.h"
 
 int main(int _argc, char* _argv[]) {
 	if (_argc < 2)

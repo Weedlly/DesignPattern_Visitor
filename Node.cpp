@@ -4,8 +4,8 @@
 // Node
 // Optimize constructor //begin
 Node::Node() {
-	location_.x_ = 0.0;
-	location_.y_ = 0.0;
+	location_.x_ = 0;
+	location_.y_ = 0;
 	name_ = "";
 	id_ = ++count_id;
 }
@@ -58,8 +58,6 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 
 		bool overlap = 1;
 		if (type == "Industry") {
-
-
 			getline(fin, tmp, ' ');
 			int stf = stoi(tmp);
 			getline(fin, tmp, '\n');
@@ -86,7 +84,6 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 			}
 		}
 		else if (type == "Residential") {
-
 			getline(fin, tmp, ' ');
 			int pop = stoi(tmp);
 			getline(fin, tmp);
@@ -113,7 +110,6 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 			}
 		}
 		else if (type == "City") {
-
 			getline(fin, tmp, '\n');
 			int population_ = stoi(tmp);
 			if (CheckNodeIsExist(length, width, x_, y_, Map_Txt)) {
@@ -153,7 +149,7 @@ vector<Node*> readfile(string filename, vector<vector<int>>& Map_Txt) {
 			}
 		}
 		else {
-			cout << "   Can't add " << name_ << "  " << x_ << "  " << y_ << endl;
+			cout << "   Can't add " << name_ << "  " << x_ << "  " << y_ << " the location are existed" << endl;
 		}
 	}
 	fin.close();

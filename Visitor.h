@@ -10,7 +10,7 @@
 #include <Windows.h>
 using namespace std;
 
-#define Map_Size  100
+#define Map_Size  50
 
 struct Location;
 class Node;
@@ -35,49 +35,30 @@ public:
 
 class XMLExportVisitor : public Visitor {
 public:
-	// Export the City's ID and center coordinates and name.
+	//Export the location , center coordinates and all information.
 	void visitCity(City* city);
-
-	//Export the industry's ID, center coordinates and name.
 	void visitIndustry(Industry* industry);
-
-	// Export the Factory's ID, center coordinates and name.
 	void visitFactory(Factory* factory);
-	// Export the Commercial's ID, center coordinates and name.
 	void visitCommercial(Commercial* commercial);
-
-
-	// Export the Construction's ID, center coordinates and name.
 	void visitConstruction(Construction* construction);
-
-	// Export the Residential's ID, center coordinates and name.
 	void visitResidential(Residential* residential);
 };
 
 class CSVExportVisitor : public Visitor  // new code by D ver6
 {
 public:
-	// Export the City's ID and center coordinates and name.
+	//Export the location , center coordinates and all information.
 	void visitCity(City* city);
-
-	//Export the industry's ID, center coordinates and name.
 	void visitIndustry(Industry* industry);
-
-	// Export the Factory's ID, center coordinates and name.
 	void visitFactory(Factory* factory);
-	// Export the Commercial's ID, center coordinates and name.
 	void visitCommercial(Commercial* commercial);
-
-	// Export the Construction's ID, center coordinates and name.
 	void visitConstruction(Construction* construction);
-
-	// Export the Residential's ID, center coordinates and name.
 	void visitResidential(Residential* residential);
 };
 
 class TXTExportVisitor : public Visitor {
 public:
-	//Export the industry's location , center coordinates and filename.
+	//Export the location , center coordinates and all information.
 	void visitCity(City* city);
 	void visitIndustry(Industry* industry);
 	void visitFactory(Factory* factory);
@@ -88,7 +69,7 @@ public:
 
 class TaxVisitor :public Visitor { // D ver 8
 public:
-	// Calculate the tax of Nodes 
+	// Calculate the tax of Nodes
 	void visitCity(City* city);
 	void visitIndustry(Industry* industry);
 	void visitFactory(Factory* factory);
@@ -96,8 +77,5 @@ public:
 	void visitConstruction(Construction* construction);
 	void visitResidential(Residential* residential);
 };
-
-
-
 
 #endif // !Visitor_h

@@ -344,11 +344,9 @@ void TXTExportVisitor::visitResidential(Residential* residential) {  // new code
 	fout.close();
 }
 
-
-
 // Tax  D ver 8
 void TaxVisitor::visitCity(City* city) {
-	double density = city->getPopulation() / city->square();
+	double density = city->getPopulation() * 1.0 / city->getSize().length * city->getSize().width;
 	double tax;
 	if (density > 1000) {
 		tax = 4;
@@ -378,7 +376,7 @@ void TaxVisitor::visitFactory(Factory* factory) {
 	double tax;
 	if (!factory->getStatus())
 		tax = 0;
-	else if(factory->getStatus()){
+	else { // Warining not init tax variable
 		if ((int)(factory->getMode().find("export")) >= 0) {
 			tax = 6;
 		}
@@ -387,7 +385,7 @@ void TaxVisitor::visitFactory(Factory* factory) {
 		}
 		else tax = 3;
 	}
-	cout << factory->getName() << "'s Tax: " << tax * factory->getNumProduct() << "$" << endl;
+	cout << factory->getName() << "'s Tax: " << tax * factory->getNumProduct() << "$" << endl;// Warining not init tax variable
 }
 
 void TaxVisitor::visitCommercial(Commercial* commercial) {
@@ -395,7 +393,7 @@ void TaxVisitor::visitCommercial(Commercial* commercial) {
 	if (!commercial->getStatus())
 		tax = 0;
 	else tax = 9;
-	cout << commercial->getName() << "'s Tax: " << tax * commercial->square() << "$" << endl;
+	cout << commercial->getName() << "'s Tax: " << tax * commercial->getSize().length * commercial->getSize().width << "$" << endl;
 }
 
 void TaxVisitor::visitConstruction(Construction* construction) {
@@ -410,7 +408,7 @@ void TaxVisitor::visitConstruction(Construction* construction) {
 		tax = 3;
 	}
 	else tax = 0;
-	cout << construction->getName() << "'s Tax: " << tax * construction->square() << "$" << endl;
+	cout << construction->getName() << "'s Tax: " << tax * construction->getSize().length * construction->getSize().width << "$" << endl;
 }
 
 void TaxVisitor::visitResidential(Residential* residential) {
@@ -421,6 +419,5 @@ void TaxVisitor::visitResidential(Residential* residential) {
 	}
 
 	else tax = 3;
-
 	cout << residential->getName() << "'s Tax: " << tax * residential->getPopulation() << "$" << endl;
 }
