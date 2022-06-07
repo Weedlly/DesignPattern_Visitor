@@ -1,0 +1,6 @@
+City 1 1 1 2 DucAnCity 100000
+Commercial 4 3 8 9 WinDow 1
+Construction 3 3 13 14 AnBay 200 Bay
+Industry 7 8 2 1 D 400 ABC
+Factory 9 6 3 2 D 1 ABC
+Residential 3 2 7 5 D 12000 A1 A2 A3 A4 A5 A6 A7 A8 A9
