@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Users</string>
+    <string name="activity_input_phone">Input phone</string>
+    <string name="text_app_name">WE HELP YOU BOOK</string>
+    <string name="Input_phone_number">Nhập số điện thoại của bạn để tiếp tục</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="continue_with">hoặc tiếp tục bằng</string>
+
+
+    <string name="tvInputPhone">Nhập số điện thoại của bạn</string>
+    <string name="hint_Phone_number">Số điện thoại</string>
+    <string name="Button_continue_phone">Tiếp tục</string>
+</resources>
